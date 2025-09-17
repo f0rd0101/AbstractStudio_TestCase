@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\RegistrationRequest;
+use App\Http\Requests\LoginRequest;
 use App\Http\Services\AuthService;
 
 
@@ -24,7 +25,10 @@ class AuthController extends Controller
 
 
     }
-    //  public function test(){
-    //     return response()->json(['message'=>'hello world']);
-    // }
+
+    public function login(LoginRequest $request){
+        $validatedBody = $request->validated();
+        $res = $this->authService->loginUser($validatedBody);
+        return response()->json(['message' => 'Successfully logged in','data' => $res], 200);
+    }
 }

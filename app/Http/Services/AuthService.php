@@ -3,6 +3,7 @@
 namespace App\Http\Services;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Auth\AuthenticationException;
 
 
 class AuthService{
@@ -22,6 +23,19 @@ class AuthService{
         'tokenType'=>'Bearer'
        ];
 
+    }
+
+    public function loginUser(array $validatedBody){
+        $user = User::where('email', $validatedBody['email'])->first();
+         if(!$user || !Hash::check($validatedBody['password'],$user->password)){
+        throw new AuthenticationException('The provided credentials are incorrect. Or user does not exist.');
+        }
+        $token = $user->createToken('auth_token')->plainTextToken;
+         return[
+
+        'accessToken'=>$token,
+        'tokenType'=>'Bearer',
+        ];
     }
 
    
