@@ -38,6 +38,10 @@ class AuthService{
         ];
     }
 
+    public function logoutUser($user){
+        return $user->currentAccessToken()->delete();
+    }
+
    
 }
 

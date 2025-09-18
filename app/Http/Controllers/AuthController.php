@@ -31,4 +31,10 @@ class AuthController extends Controller
         $res = $this->authService->loginUser($validatedBody);
         return response()->json(['message' => 'Successfully logged in','data' => $res], 200);
     }
+
+    public function logout(Request $request){
+        $user = $request->user();
+        $this->authService->logoutUser($user);
+        return response()->json(['message'=>'Successfully logged out'],200);
+    }
 }
