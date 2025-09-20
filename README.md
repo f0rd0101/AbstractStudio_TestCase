@@ -34,7 +34,7 @@
 		DB_PASSWORD=secret
 
 ## 4. Виконання міграцій
-	php artisan migrate:fresh
+	php artisan migrate
 
 ## 5. Запуск серверів. 
 
