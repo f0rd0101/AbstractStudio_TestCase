@@ -1,3 +1,32 @@
+<template>
+  <div>
+    <form @submit.prevent="addRecord" style="margin-bottom: 1rem">
+      <input v-model="name" placeholder="Name" required />
+      <input v-model="email" type="email" placeholder="Email" required />
+      <button type="submit">Add</button>
+    </form>
+
+    <table border="1" cellpadding="5">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Email</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="row in rows" :key="row.id">
+          <td>{{ row.id }}</td>
+          <td>{{ row.name }}</td>
+          <td>{{ row.email }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p v-if="error" style="color: red">{{ error }}</p>
+  </div>
+</template>
+
 <script setup>
 import { ref, onMounted } from 'vue'
 
@@ -28,6 +57,7 @@ async function addRecord() {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        Accept: 'application/json',
         Authorization: `Bearer ${props.token}`,
       },
       body: JSON.stringify({ name: name.value, email: email.value }),
@@ -43,31 +73,3 @@ async function addRecord() {
 
 onMounted(loadData)
 </script>
-<template>
-  <div>
-    <form @submit.prevent="addRecord" style="margin-bottom: 1rem">
-      <input v-model="name" placeholder="Name" required />
-      <input v-model="email" type="email" placeholder="Email" required />
-      <button type="submit">Add</button>
-    </form>
-
-    <table border="1" cellpadding="5">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Name</th>
-          <th>Email</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="row in rows" :key="row.id">
-          <td>{{ row.id }}</td>
-          <td>{{ row.name }}</td>
-          <td>{{ row.email }}</td>
-        </tr>
-      </tbody>
-    </table>
-
-    <p v-if="error" style="color: red">{{ error }}</p>
-  </div>
-</template>

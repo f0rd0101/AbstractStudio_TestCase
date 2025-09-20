@@ -2,10 +2,12 @@
   <div style="max-width:600px;margin:2rem auto;font-family:sans-serif">
     <h1>Info Table</h1>
 
+    <!-- Если токена нет — показываем форму авторизации -->
     <div v-if="!token">
       <auth-form @success="setToken" />
     </div>
 
+    <!-- Если токен есть — показываем таблицу и форму добавления -->
     <div v-else>
       <info-view :token="token" />
       <button @click="logout" style="margin-top:1rem">Logout</button>

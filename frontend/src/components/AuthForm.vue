@@ -1,3 +1,21 @@
+<template>
+  <div>
+    <h2>{{ mode }}</h2>
+    <form @submit.prevent="submit">
+      <input v-if="mode === 'Register'" v-model="name" placeholder="Name" required />
+      <input v-model="email" type="email" placeholder="Email" required />
+      <input v-model="password" type="password" placeholder="Password" required />
+      <button type="submit">{{ mode }}</button>
+    </form>
+
+    <button @click="toggleMode" style="margin-top: 0.5rem">
+      Switch to {{ mode === 'Login' ? 'Register' : 'Login' }}
+    </button>
+
+    <p v-if="error" style="color: red">{{ error }}</p>
+  </div>
+</template>
+
 <script setup>
 import { ref } from 'vue'
 
@@ -23,12 +41,12 @@ async function submit() {
   try {
     const res = await fetch(url, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
       body: JSON.stringify(bodyData),
     })
     if (!res.ok) throw new Error('Ошибка авторизации')
     const data = await res.json()
-    emit('success', data.accessToken)
+    emit('success', data.data.accessToken)
     name.value = ''
     email.value = ''
     password.value = ''
@@ -37,21 +55,3 @@ async function submit() {
   }
 }
 </script>
-
-<template>
-  <div>
-    <h2>{{ mode }}</h2>
-    <form @submit.prevent="submit">
-      <input v-if="mode === 'Register'" v-model="name" placeholder="Name" required />
-      <input v-model="email" type="email" placeholder="Email" required />
-      <input v-model="password" type="password" placeholder="Password" required />
-      <button type="submit">{{ mode }}</button>
-    </form>
-
-    <button @click="toggleMode" style="margin-top: 0.5rem">
-      Switch to {{ mode === 'Login' ? 'Register' : 'Login' }}
-    </button>
-
-    <p v-if="error" style="color: red">{{ error }}</p>
-  </div>
-</template>
