@@ -20,7 +20,8 @@
 
 ## 3. Налаштування файлу .env
 Створіть файл .env на основі .env.example. Для цього введіть команду
-          cp .env.example .env 
+
+cp .env.example .env 
 
 ## Приклад налаштувань для підключення до бази даних:
 		DB_CONNECTION=mysql
