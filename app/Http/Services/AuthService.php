@@ -7,7 +7,7 @@ use Illuminate\Auth\AuthenticationException;
 
 
 class AuthService{
-    
+
 
     public function registerUser(array $validatedBody){
         $user = User::create([
@@ -17,11 +17,11 @@ class AuthService{
        ]);
        $token = $user->createToken('auth_token')->plainTextToken;
 
-       return[
-        'user'=>$user,
-        'accessToken'=>$token,
-        'tokenType'=>'Bearer'
-       ];
+       return [
+            'user' => $user,
+            'accessToken' => $token,
+            'tokenType' => 'Bearer'
+        ];
 
     }
 
@@ -31,10 +31,10 @@ class AuthService{
         throw new AuthenticationException('The provided credentials are incorrect. Or user does not exist.');
         }
         $token = $user->createToken('auth_token')->plainTextToken;
-         return[
-
-        'accessToken'=>$token,
-        'tokenType'=>'Bearer',
+        return [
+            'user' => $user,
+            'accessToken' => $token,
+            'tokenType' => 'Bearer'
         ];
     }
 
@@ -42,6 +42,6 @@ class AuthService{
         return $user->currentAccessToken()->delete();
     }
 
-   
+
 }
 

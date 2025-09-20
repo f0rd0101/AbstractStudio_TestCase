@@ -46,6 +46,7 @@ async function submit() {
     })
     if (!res.ok) throw new Error('Ошибка авторизации')
     const data = await res.json()
+    console.log(data)
     emit('success', data.data.accessToken)
     name.value = ''
     email.value = ''
